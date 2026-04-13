@@ -1,0 +1,19 @@
+sudo usermod -aG docker jenkins
+sudo systemctl restart jenkins
+
+cd ~/Desktop
+git clone https://github.com/Neeraj14Patil/usermanagement-app.git
+cd usermanagement-app
+
+minikube start
+# Create the pull secret (Test Case 9)
+kubectl create secret docker-registry my-registry-secret \
+--docker-username=neeraj14patil
+--docker-password=Mfgpro@9876
+--docker-email=neeraj14091991@gmail.com
+
+# Deploy everything
+kubectl apply -f k8s-deploy.yaml
+
+
+kubectl exec -it $(kubectl get pods -l app=mysql -o jsonpath='{.items[0].metadata.name}') -- mysql -u root -pNuvelabs123$ -e "SHOW DATABASES;"
